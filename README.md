@@ -42,17 +42,15 @@ core.register(GapiServiceProvider, {
 
 For example in an application:
 ```
-const onSignedIn = () => {
-  const gapi = core.make('google/api'); // or 'window.gapi'
-
+const onSignedIn = (gapi) => {
   // Do whatever you want here
 };
 
 // Get the provider
-const osjsgapi = core.make('osjs/gapi');
+const osjsgapi = core.make('osjs/gapi').create();
 
 // Remove our event on quit
-proc.on('destroy', () => osjsgapi.off('signed-in', onSignedIn))
+proc.on('destroy', () => osjsgapi.destroy());
 
 // Attach the logged in event listener
 osjsgapi.on('signed-in', onSignedIn);

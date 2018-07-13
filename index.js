@@ -100,6 +100,7 @@ export class GapiServiceProvider extends ServiceProvider {
 
     this.signedIn = false;
     this.loaded = false;
+    this.clients = [];
     this.bus = new EventHandler('gapi');
   }
 
@@ -107,6 +108,10 @@ export class GapiServiceProvider extends ServiceProvider {
    * Destroys the service provider
    */
   destroy() {
+    this.emitAll('destroy');
+
+    this.clients = this.client.filter(c => c.destroy());
+
     this.tray = this.tray.destroy();
     this.bus = this.bus.destroy();
   }
@@ -125,10 +130,9 @@ export class GapiServiceProvider extends ServiceProvider {
     });
 
     this.core.singleton('osjs/gapi', () => ({
-      logout: () => this.logout(),
       login: () => this.login(),
-      on: (...args) => this.bus.on(...args),
-      off: (...args) => this.bus.off(...args)
+      logout: () => this.login(),
+      create: () => this.createInstance()
     }));
 
     this.bus.on('signed-in', () => {
@@ -137,9 +141,15 @@ export class GapiServiceProvider extends ServiceProvider {
         title: 'Google API',
         message: 'You have signed on to Google'
       });
+
+      this.emitAll('signed-in');
     });
 
-    this.bus.on('signed-out', () => (this.loaded = false));
+    this.bus.on('signed-out', () => {
+      this.loaded = false;
+
+      this.emitAll('signed-out');
+    });
   }
 
   /**
@@ -194,10 +204,46 @@ export class GapiServiceProvider extends ServiceProvider {
   }
 
   /**
+   * Creates a new instance that we return from service
+   * @desc It's jus a small wrapper with a bus attached
+   */
+  createInstance() {
+    const bus = new EventHandler('gapi-client');
+
+    this.clients.push(bus);
+
+    return {
+      login: () => this.login(),
+      logout: () => this.logout(),
+      on: (...args) => bus.on(...args),
+      off: (...args) => bus.off(...args),
+      destroy: () => {
+        const foundIndex = this.clients.find(b => b === bus);
+        if (foundIndex !== -1) {
+          this.clients.splice(foundIndex, 1);
+        }
+
+        bus.destroy();
+      }
+    };
+  }
+
+  /**
+   * Emits events across all created instances
+   * @see EventHandler#emit
+   */
+  emitAll(name, ...args) {
+    args.push(window.gapi);
+
+    this.clients.forEach(bus => bus.emit(name, ...args));
+  }
+
+  /**
    * Sets up the gapi auth listening
    */
   listen() {
     const emit = () => this.bus.emit(this.signedIn ? 'signed-in' : 'signed-out');
+
     if (!this.loaded) {
       gapiAuthInstance().isSignedIn.listen(s => {
         this.signedIn = s;
