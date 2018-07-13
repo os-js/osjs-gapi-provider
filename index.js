@@ -154,6 +154,7 @@ export class GapiServiceProvider extends ServiceProvider {
 
   /**
    * Start the service provider
+   * @see GapiServiceProvider#createApi
    */
   start() {
     this.createTray();
@@ -191,6 +192,7 @@ export class GapiServiceProvider extends ServiceProvider {
 
   /**
    * Creates google api
+   * @return Promise
    */
   createApi() {
     const {src, libraries, timeout, client} = this.options;
@@ -206,6 +208,7 @@ export class GapiServiceProvider extends ServiceProvider {
   /**
    * Creates a new instance that we return from service
    * @desc It's jus a small wrapper with a bus attached
+   * @return {Object}
    */
   createInstance() {
     const bus = new EventHandler('gapi-client');
@@ -261,20 +264,28 @@ export class GapiServiceProvider extends ServiceProvider {
 
   /**
    * Perform login
+   * @return Promise
    */
   login() {
     if (!this.signedIn) {
-      gapiAuthInstance().signIn();
+      return gapiAuthInstance().signIn()
+        .then(() => window.gapi);
     }
+
+    return Promise.resolve(window.gapi);
   }
 
   /**
    * Perform logout
+   * @return Promise
    */
   logout() {
     if (this.signedIn) {
-      gapiAuthInstance().signOut();
+      return gapiAuthInstance().signOut()
+        .then(() => window.gapi);
     }
+
+    return Promise.resolve(window.gapi);
   }
 }
 

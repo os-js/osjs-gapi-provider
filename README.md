@@ -42,19 +42,13 @@ core.register(GapiServiceProvider, {
 
 For example in an application:
 ```
-const onSignedIn = (gapi) => {
-  // Do whatever you want here
-};
-
-// Get the provider
 const osjsgapi = core.make('osjs/gapi').create();
+osjsgapi.on('signed-in', () => console.log('You were signed in'));
+osjsgapi.on('signed-out', () => console.log('You were signed out'));
 
-// Remove our event on quit
+osjsgapi.login().then(gapi => {
+  // Do whatever
+});
+
 proc.on('destroy', () => osjsgapi.destroy());
-
-// Attach the logged in event listener
-osjsgapi.on('signed-in', onSignedIn);
-
-// Try to log in. This will fire the 'signed-in' event when successful.
-osjsgapi.login();
 ```
