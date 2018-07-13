@@ -153,6 +153,13 @@ export class GapiServiceProvider extends ServiceProvider {
   }
 
   /**
+   * Get a list of provided services
+   */
+  provides() {
+    return ['google/api', 'osjs/gapi'];
+  }
+
+  /**
    * Start the service provider
    * @see GapiServiceProvider#createApi
    */
