@@ -15,7 +15,7 @@ This is the Google API Provider for OS.js v3.
 
 ## Installation
 
-In your server initialization script:
+In your client initialization script:
 
 ```
 const GapiServiceProvider = require('@osjs/gapi-provider');
