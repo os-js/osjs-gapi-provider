@@ -13,6 +13,8 @@
 
 This is the Google API Provider for OS.js v3.
 
+[![Build Status](https://travis-ci.org/os-js/osjs-gapi-provider.svg?branch=master)](https://travis-ci.org/os-js/osjs-gapi-provider)
+
 ## Installation
 
 In your client initialization script:

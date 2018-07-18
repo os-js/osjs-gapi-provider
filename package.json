@@ -4,7 +4,8 @@
   "description": "Google API Service Provider for OS.js v3",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint *.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "homepage": "https://github.com/os-js/osjs-gapi-provider#readme",
   "dependencies": {
     "@osjs/common": "^3.0.0-alpha.11"
+  },
+  "devDependencies": {
+    "eslint": "^5.1.0"
   }
 }
