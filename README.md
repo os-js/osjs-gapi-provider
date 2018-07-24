@@ -20,7 +20,7 @@ This is the Google API Provider for OS.js v3.
 In your client initialization script:
 
 ```
-import GapiServiceProvider from '@osjs/gapi-provider';
+import {GapiServiceProvider} from '@osjs/gapi-provider';
 
 core.register(GapiServiceProvider, {
   args: {
