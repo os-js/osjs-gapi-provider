@@ -28,8 +28,6 @@
  * @licence Simplified BSD License
  */
 
-import {ServiceProvider, EventHandler} from '@osjs/common';
-
 /*
  * Alias
  */
@@ -88,20 +86,21 @@ const loadGapiClient = (libraries, timeout) => new Promise((resolve, reject) => 
  * Google API Service Provider
  * @desc Provides gapi
  */
-export class GapiServiceProvider extends ServiceProvider {
+export class GapiServiceProvider {
 
   constructor(core, options) {
-    super(core, Object.assign({
+    this.options = Object.assign({
       src: 'https://apis.google.com/js/api.js',
       timeout: 30000,
       libraries: 'client:auth2',
       client: {}
-    }, options));
+    }, options);
 
+    this.core = core;
     this.signedIn = false;
     this.loaded = false;
     this.clients = [];
-    this.bus = new EventHandler('gapi');
+    this.bus = core.make('osjs/event-handler', 'gapi');
   }
 
   /**
@@ -218,7 +217,7 @@ export class GapiServiceProvider extends ServiceProvider {
    * @return {Object}
    */
   createInstance() {
-    const bus = new EventHandler('gapi-client');
+    const bus = this.core.make('osjs/event-handler', 'gapi-client');
 
     this.clients.push(bus);
 
