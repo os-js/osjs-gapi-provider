@@ -29,14 +29,14 @@
   "homepage": "https://github.com/os-js/osjs-gapi-provider#readme",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.54",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
-    "@babel/runtime": "^7.0.0-beta.54",
-    "babel-loader": "^8.0.0-beta.4",
-    "eslint": "^5.1.0",
-    "file-loader": "^1.1.11",
-    "webpack": "^4.16.2",
-    "webpack-cli": "^3.1.0"
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/runtime": "^7.1.2",
+    "babel-loader": "^8.0.4",
+    "eslint": "^5.6.1",
+    "file-loader": "^2.0.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
   }
 }
