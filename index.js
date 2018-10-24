@@ -100,7 +100,7 @@ export class GapiServiceProvider {
     this.signedIn = false;
     this.loaded = false;
     this.clients = [];
-    this.bus = core.make('osjs/event-handler', 'gapi');
+    this.bus = null;
   }
 
   /**
@@ -133,22 +133,6 @@ export class GapiServiceProvider {
       logout: () => this.login(),
       create: () => this.createInstance()
     }));
-
-    this.bus.on('signed-in', () => {
-      this.core.make('osjs/notification', {
-        icon: require('./logo.svg'),
-        title: 'Google API',
-        message: 'You have signed on to Google'
-      });
-
-      this.emitAll('signed-in');
-    });
-
-    this.bus.on('signed-out', () => {
-      this.loaded = false;
-
-      this.emitAll('signed-out');
-    });
   }
 
   /**
@@ -193,6 +177,24 @@ export class GapiServiceProvider {
           onclick: () => this.logout()
         }]
       });
+    });
+
+    this.bus = this.core.make('osjs/event-handler', 'gapi');
+
+    this.bus.on('signed-in', () => {
+      this.core.make('osjs/notification', {
+        icon: require('./logo.svg'),
+        title: 'Google API',
+        message: 'You have signed on to Google'
+      });
+
+      this.emitAll('signed-in');
+    });
+
+    this.bus.on('signed-out', () => {
+      this.loaded = false;
+
+      this.emitAll('signed-out');
     });
   }
 
