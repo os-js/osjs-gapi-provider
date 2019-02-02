@@ -22,7 +22,7 @@ In your client initialization script:
 ```
 import {GapiServiceProvider} from '@osjs/gapi-provider';
 
-core.register(GapiServiceProvider, {
+osjs.register(GapiServiceProvider, {
   args: {
     // These are set for you by default
     src: 'https://apis.google.com/js/api.js',
