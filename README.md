@@ -12,12 +12,12 @@
 
 # OS.js Google API Provider
 
-This is the Google API Provider for OS.js v3.
+This is the Google API Provider for OS.js.
 
 ## Installation
 
 ```bash
-npm install --save --production @osjs/gapi-provider
+npm install @osjs/gapi-provider
 ```
 
 In your client bootstrap file (`src/client/index.js`):
