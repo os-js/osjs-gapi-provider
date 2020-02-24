@@ -29,7 +29,7 @@
   "homepage": "https://github.com/os-js/osjs-gapi-provider#readme",
   "dependencies": {},
   "devDependencies": {
-    "@osjs/dev-meta": "^1.0.2"
+    "@osjs/dev-meta": "^1.0.3"
   },
   "eslintConfig": {
     "env": {
